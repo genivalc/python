@@ -37,14 +37,3 @@ if __name__ == "__main__":
 
       
 
-
-
-# ✅ Multi-documentos: suporte a múltiplos manuais de diferentes modelos/marcas.
-
-# 🧾 Metadata nos chunks: salvar modelo/ano nas metadatas para filtro inteligente.
-
-# 🌍 Interface web: integrar com Streamlit ou FastAPI.
-
-# 🧪 Avaliação RAG: implemente LangChain Eval para medir a qualidade das respostas.
-
-# 🔒 Controle de domínio por LLM: combine regras com classificadores de tópico.
