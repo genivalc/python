@@ -37,7 +37,7 @@ rag_car_agent/
 ## 🚀 Installation and Usage
 
 ### 1. **Clone and Install**
-```
+```bash
 git clone <repo-url>
 cd rag_car_agent
 pip install -r requirements.txt
