@@ -11,29 +11,29 @@ class VectorStoreManager:
         self.vectorstore = None
     
     def create_or_load(self, documents: List[Document], force_rebuild: bool = False) -> FAISS:
-        """Cria ou carrega vectorstore existente"""
+        """Creates or loads existing vectorstore"""
         if os.path.exists(config.VECTORSTORE_DIR) and not force_rebuild:
-            print(f"🔁 Carregando vectorstore existente")
+            print(f"🔁 Loading existing vectorstore")
             self.vectorstore = FAISS.load_local(
                 config.VECTORSTORE_DIR, 
                 self.embeddings, 
                 allow_dangerous_deserialization=True
             )
         else:
-            print(f"🔎 Criando novo vectorstore")
+            print(f"🔎 Creating new vectorstore")
             self.vectorstore = FAISS.from_documents(documents, self.embeddings)
             self._save_vectorstore()
         
         return self.vectorstore
     
     def _save_vectorstore(self):
-        """Salva vectorstore no disco"""
+        """Saves vectorstore to disk"""
         os.makedirs(os.path.dirname(config.VECTORSTORE_DIR), exist_ok=True)
         self.vectorstore.save_local(config.VECTORSTORE_DIR)
         print(f"💾 Vectorstore salvo em {config.VECTORSTORE_DIR}")
     
     def get_vectorstore(self) -> FAISS:
-        """Retorna vectorstore atual"""
+        """Returns current vectorstore"""
         if self.vectorstore is None:
-            raise ValueError("Vectorstore não foi inicializado")
+            raise ValueError("Vectorstore not initialized")
         return self.vectorstore

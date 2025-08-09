@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 def setup_logging():
-    """Configura sistema de logging"""
+    """Configures logging system"""
     log_dir = "./logs"
     os.makedirs(log_dir, exist_ok=True)
     

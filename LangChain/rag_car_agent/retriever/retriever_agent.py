@@ -15,8 +15,8 @@ class RetrieverAgent:
         )
     
     def retrieve_context(self, query: str) -> List[Document]:
-        """Recupera documentos relevantes para a query"""
-        print(f"🔍 Buscando contexto para: {query[:50]}...")
+        """Retrieves relevant documents for the query"""
+        print(f"🔍 Searching context for: {query[:50]}...")
         
         # Busca por similaridade
         relevant_docs = self.retriever.get_relevant_documents(query)
@@ -24,13 +24,13 @@ class RetrieverAgent:
         # Filtra e ranqueia resultados
         filtered_docs = self._filter_and_rank(relevant_docs, query)
         
-        print(f"📋 Encontrados {len(filtered_docs)} páginas relevantes") 
+        print(f"📋 Found {len(filtered_docs)} relevant pages") 
 
         return filtered_docs
     
     def _filter_and_rank(self, docs: List[Document], query: str) -> List[Document]:
-        """Filtra e ranqueia documentos por relevância"""
-        # Remove duplicatas baseado no conteúdo
+        """Filters and ranks documents by relevance"""
+        # Remove duplicates based on content
         unique_docs = []
         seen_content = set()
         
@@ -43,7 +43,7 @@ class RetrieverAgent:
         return unique_docs[:config.RETRIEVAL_K]
     
     def get_context_string(self, query: str) -> str:
-        """Retorna contexto como string formatada"""
+        """Returns context as formatted string"""
         docs = self.retrieve_context(query)
         
         context_parts = []

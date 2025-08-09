@@ -16,32 +16,33 @@ class GeneratorAgent:
         self.prompt = self._create_prompt()
     
     def _create_prompt(self) -> ChatPromptTemplate:
-        """Cria prompt otimizado para RAG automotivo"""
-        template = """Você é um especialista automotivo altamente qualificado.
+        """Creates optimized prompt for automotive RAG"""
+        template = """You are a highly qualified automotive specialist.
 
-CONTEXTO RECUPERADO:
+RETRIEVED CONTEXT:
 {context}
 
-INSTRUÇÕES:
-1. Responda APENAS com base no contexto fornecido acima
-2. Se a informação não estiver no contexto, diga claramente que não possui essa informação
-3. Seja preciso, técnico e detalhado quando apropriado
-4. Cite partes específicas do contexto quando relevante
-5. Mantenha foco estritamente automotivo
+INSTRUCTIONS:
+1. Answer ONLY based on the context provided above
+2. If information is not in the context, clearly state you don't have that information
+3. Be precise, technical and detailed when appropriate
+4. Cite specific parts of the context when relevant
+5. Keep focus strictly automotive
+6. ALWAYS respond in Portuguese (Brazil)
 
-PERGUNTA: {question}
+QUESTION: {question}
 
-RESPOSTA:"""
+RESPONSE:"""
         
         return ChatPromptTemplate.from_template(template)
     
     def generate_response(self, query: str) -> Dict[str, Any]:
-        """Gera resposta baseada no contexto recuperado"""
-        # Recupera contexto relevante
+        """Generates response based on retrieved context"""
+        # Retrieve relevant context
         context = self.retriever.get_context_string(query)
         
         if not context.strip():
-            print("🌐 Buscando informações na web...")
+            print("🌐 Searching web for information...")
             web_results = self.web_search.search_automotive(query)
             web_context = self.web_search.format_web_results(web_results)
             
@@ -60,13 +61,13 @@ RESPOSTA:"""
                     "search_type": "web"
                 }
         
-        # Gera resposta usando o LLM
-        print("🤖 Gerando resposta...")
+        # Generate response using LLM
+        print("🤖 Generating response...")
         response = self.llm.invoke(
             self.prompt.format_messages(context=context, question=query)
         )
         
-        # Extrai fontes utilizadas
+        # Extract used sources
         sources = self._extract_sources(context)
         
         return {
@@ -77,7 +78,7 @@ RESPOSTA:"""
         }
     
     def _extract_sources(self, context: str) -> list:
-        """Extrai informações das fontes utilizadas"""
+        """Extracts information from used sources"""
         # Simples extração de fontes baseada nos documentos
         import re
         page_pattern = r'\[Página (\d+)\]'  # Mudança aqui

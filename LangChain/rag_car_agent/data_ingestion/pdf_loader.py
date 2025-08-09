@@ -14,16 +14,16 @@ class PDFProcessor:
         )
     
     def load_and_process(self, pdf_path: str) -> List[Document]:
-        """Carrega PDF e aplica chunking semântico"""
+        """Loads PDF and applies semantic chunking"""
         if not os.path.exists(pdf_path):
-            raise FileNotFoundError(f"PDF não encontrado: {pdf_path}")
+            raise FileNotFoundError(f"PDF not found: {pdf_path}")
         
-        print(f"📄 Carregando PDF: {pdf_path}")
+        print(f"📄 Loading PDF: {pdf_path}")
         loader = PyPDFLoader(pdf_path)
         documents = loader.load()
         
-        print(f"✂️ Aplicando chunking semântico")
+        print(f"✂️ Applying semantic chunking")
         chunks = self.chunker.chunk_documents(documents)
         
-        print(f"📊 Gerados {len(chunks)} chunks semânticos")
+        print(f"📊 Generated {len(chunks)} semantic chunks")
         return chunks

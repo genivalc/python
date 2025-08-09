@@ -10,7 +10,7 @@ class SemanticChunker:
         self.overlap = overlap
         
     def chunk_documents(self, documents: List[Document]) -> List[Document]:
-        """Aplica chunking semântico baseado na estrutura do documento"""
+        """Applies semantic chunking based on document structure"""
         chunks = []
         
         for doc in documents:
@@ -31,12 +31,12 @@ class SemanticChunker:
         return chunks
     
     def _semantic_split(self, text: str) -> List[str]:
-        """Divide texto baseado em estruturas semânticas"""
-        # Padrões para identificar estruturas semânticas
+        """Splits text based on semantic structures"""
+        # Patterns to identify semantic structures
         section_pattern = r'\n\s*(?:\d+\.|\w+\.|\•|\-)\s+'
         paragraph_pattern = r'\n\s*\n'
         
-        # Primeiro, tenta dividir por seções
+        # First, try to split by sections
         sections = re.split(section_pattern, text)
         
         chunks = []
@@ -44,7 +44,7 @@ class SemanticChunker:
             if len(section) <= self.max_chunk_size:
                 chunks.append(section.strip())
             else:
-                # Se seção muito grande, divide por parágrafos
+                # If section too large, split by paragraphs
                 paragraphs = re.split(paragraph_pattern, section)
                 current_chunk = ""
                 
@@ -59,7 +59,7 @@ class SemanticChunker:
                 if current_chunk:
                     chunks.append(current_chunk.strip())
         
-        # Fallback para chunking tradicional se necessário
+        # Fallback to traditional chunking if necessary
         final_chunks = []
         for chunk in chunks:
             if len(chunk) > self.max_chunk_size:
