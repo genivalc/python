@@ -2,6 +2,8 @@
 
 Advanced RAG (Retrieval-Augmented Generation) system for automotive queries with hybrid search, semantic chunking and modular architecture.
 
+---
+
 ## 🎯 Key Features
 
 - 🔍 **Hybrid Search**: Semantic + keyword + term expansion
@@ -11,8 +13,9 @@ Advanced RAG (Retrieval-Augmented Generation) system for automotive queries with
 - 🔧 **Configurable**: Adjustable parameters
 - 📝 **Traceable**: Sources and detailed logs
 
-## 🏗️ Architecture
+---
 
+## 🏗️ Architecture
 
 rag_car_agent/
 ├── data_ingestion/ # Document processing
@@ -33,6 +36,7 @@ rag_car_agent/
 ├── config.py # Configuration
 └── requirements.txt # Dependencies
 
+--- 
 
 ## 🚀 Installation and Usage
 
@@ -41,161 +45,151 @@ rag_car_agent/
 git clone <repo-url>
 cd rag_car_agent
 pip install -r requirements.txt
+```
 
-
-2. Configure Environment
-# Create .env file
+### 2. Configure Environment
+#### Create .env file
 echo "GOOGLE_API_KEY=your_key_here" > .env
 
-
-
-3. Add Documents
-# Place PDFs in data/ folder
+### 3. Add Documents
+#### Place PDFs in data/ folder
 cp car_manual.pdf data/
 
-
-
-4. Run API
-# Development
+### 4. Run API
+#### Development
 python app.py
 
-# Production
-uvicorn app:app --host 0.0.0.0 --port 8000
 
 
-
-5. Test
+## 5. Test
 curl -X POST "http://localhost:8000/ask" \
   -H "Content-Type: application/json" \
-  -d '{"question": "How to adjust the steering wheel?"}'
+  -d '{"question": "Como regular o volante do carro??"}'
 
 
-
-📡 API Endpoints
+## 📡 API Endpoints
 Endpoint	Method	Description
 /	GET	API status
-/health	GET	Health check
 /ask	POST	Ask question
 Response Example
 {
-  "answer": "Para regular o volante do Fiat Argo...",
+  "answer": "Para regular o volante...",
   "sources": ["Page 45", "Page 67"],
   "context_used": true
 }
 
+---
 
-json
+# json
 ⚙️ Configuration
 Adjust parameters in config.py:
 
-# Chunking
+## Chunking
 MIN_CHUNK_SIZE: int = 200
 MAX_CHUNK_SIZE: int = 1000
 CHUNK_OVERLAP: int = 150
 
-# Retrieval
+## Retrieval
 RETRIEVAL_K: int = 5
 SIMILARITY_THRESHOLD: float = 0.5  # Reduced for better recall
 
-# Models
+## Models
 LLM_MODEL: str = "gemini-2.0-flash-lite"
 EMBEDDING_MODEL: str = "models/embedding-001"
 
+ ---
 
-python
-🔍 Hybrid Search System
-1. Semantic Search
-Embeddings with Google Generative AI
+# python
+## 🔍 Hybrid Search System
+### 1. Semantic Search
+#### Embeddings with Google Generative AI
 
-Configurable similarity threshold
+#### Configurable similarity threshold
 
-Relevance filtering
+#### Relevance filtering
 
-2. Term Expansion
-"steering" → ["wheel", "column", "adjustment"]
-"adjust" → ["configure", "position", "calibrate"]
-
-
-3. Keyword Search
-Reduced threshold (0.3)
-
-Manual relevance filtering
-
-Robust fallback
-
-4. Web Search
-DuckDuckGo Search
-
-Expanded automotive terms
-
-Final fallback
-
-📊 Monitoring
-Structured Logs
-2025-08-09 16:18:46 - INFO - 📝 Processing question: How to adjust steering wheel?
-2025-08-09 16:18:47 - WARNING - No relevant docs (threshold 0.7)
-2025-08-09 16:18:48 - INFO - 🌐 Searching web...
-2025-08-09 16:18:49 - INFO - ✅ Response generated with 3 sources
+### 2. Term Expansion
+#### "steering" → ["wheel", "column", "adjustment"]
+#### "adjust" → ["configure", "position", "calibrate"]
 
 
-Health Check
-curl http://localhost:8000/health
-# {"status": "healthy", "message": "RAG system operational"}
+### 3. Keyword Search
+#### Reduced threshold (0.3)
 
+#### Manual relevance filtering
 
+#### Robust fallback
 
-🛠️ Development
-Test Structure
-# Run tests
-pytest tests/
+### 4. Web Search
+#### DuckDuckGo Search
 
-# Coverage
-pytest --cov=. tests/
+#### Expanded automotive terms
 
+#### Final fallback
 
+---
 
-Add New Documents
-Place PDF in data/
+# 📊 Monitoring
+### Structured Logs
+#### 2025-08-09 16:18:46 - INFO - 📝 Processing question: How to adjust steering wheel?
+#### 2025-08-09 16:18:47 - WARNING - No relevant docs (threshold 0.7)
+#### 2025-08-09 16:18:48 - INFO - 🌐 Searching web...
+#### 2025-08-09 16:18:49 - INFO - ✅ Response generated with 3 sources
 
-Restart application (auto rebuild)
+---
 
-Test with specific questions
+# Add New Documents
+## Place PDF in data/
 
-Adjust Threshold
-# For specific documents
-SIMILARITY_THRESHOLD = 0.3  # More permissive
+### Restart application (auto rebuild)
 
-# For generic documents  
-SIMILARITY_THRESHOLD = 0.7  # More restrictive
+### Test with specific questions
 
+---
 
-🔧 Troubleshooting
-Problem: "No relevant docs retrieved"
-Solution : Reduce SIMILARITY_THRESHOLD in config.py
+# Adjust Threshold
+## For specific documents
+### SIMILARITY_THRESHOLD = 0.3  # More permissive
 
-Problem: Generic responses
-Solution : Check if PDF is in data/ and vectorstore was created
+## For generic documents  
+### SIMILARITY_THRESHOLD = 0.7  # More restrictive
 
-Problem: API not responding
-Solution : Check GOOGLE_API_KEY in .env
+----
 
-📈 Roadmap
- Multi-language support
- Response caching
- Web interface
- Performance metrics
- More format support (DOCX, TXT)
- Image/diagram search
-📄 License
-MIT License - see LICENSE for details.
+# 🔧 Troubleshooting
+## Problem: "No relevant docs retrieved"
+### Solution : Reduce SIMILARITY_THRESHOLD in config.py
 
-🤝 Contributing
-Fork the project
+## Problem: Generic responses
+### Solution : Check if PDF is in data/ and vectorstore was created
 
-Create branch ( git checkout -b feature/new-feature)
+## Problem: API not responding
+### Solution : Check GOOGLE_API_KEY in .env
 
-Commit ( git commit -m 'Add new feature')
+----
 
-Push ( git push origin feature/new-feature)
+# 📈 Roadmap
+#### Multi-language support
+#### Response caching
+#### Web interface
+#### Performance metrics
+#### More format support (DOCX, TXT)
+#### Image/diagram search
+
+-----
+
+# 📄 License
+### MIT License - see LICENSE for details.
+
+----
+
+# 🤝 Contributing
+### Fork the project
+
+#### Create branch ( git checkout -b feature/new-feature)
+
+#### Commit ( git commit -m 'Add new feature')
+
+#### Push ( git push origin feature/new-feature)
 
 Open Pull Request
