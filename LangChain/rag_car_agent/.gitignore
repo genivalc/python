@@ -1,2 +1,5 @@
 _pycache_
 .env
+data
+logs
+
