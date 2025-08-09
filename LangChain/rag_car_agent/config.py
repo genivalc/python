@@ -17,7 +17,7 @@ class Config:
     
     # Retrieval
     RETRIEVAL_K: int = 5
-    SIMILARITY_THRESHOLD: float = 0.7
+    SIMILARITY_THRESHOLD: float = 0.5 
     
     # Models
     EMBEDDING_MODEL: str = "models/embedding-001"
